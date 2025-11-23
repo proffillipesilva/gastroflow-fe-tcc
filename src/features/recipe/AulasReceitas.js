@@ -166,7 +166,7 @@ const AulasReceitas = () => {
 
   return (
     <div className="flex w-screen h-screen overflow-hidden bg-gray-50 text-gray-800 font-sans">
-      <div className="flex-1 flex flex-col bg-orange-100 ml-64">
+      <div className="flex-1 flex flex-col bg-orange-100">
 
         {/* Topbar */}
         <div className="h-28 shrink-0 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-600

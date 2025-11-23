@@ -65,7 +65,7 @@ const MostrarFornecedores = () => {
 
   return (
     <div className="flex w-screen h-screen overflow-hidden bg-orange-100 text-gray-800 font-sans">
-      <div className="flex-1 flex flex-col min-w-0 ml-64">
+      <div className="flex-1 flex flex-col min-w-0">
 
         {/* Header */}
         <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 flex flex-col items-center justify-center text-white rounded-b-3xl">

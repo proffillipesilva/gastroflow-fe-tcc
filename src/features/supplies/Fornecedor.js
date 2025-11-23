@@ -69,7 +69,7 @@ const Fornecedor = () => {
     <div className="flex w-screen h-screen overflow-hidden bg-[#ffffff] text-gray-800 font-sans">
 
       {/* LADO DIREITO */}
-      <div className="flex-1 min-w-0 flex flex-col overflow-hidden bg-orange-100 ml-64">
+      <div className="flex-1 min-w-0 flex flex-col overflow-hidden bg-orange-100">
         {/* Topbar */}
         <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 flex flex-col items-center justify-center text-white rounded-b-3xl">
           <h2 className="text-2xl font-bold">Cadastrar Fornecedor</h2>
@@ -77,7 +77,9 @@ const Fornecedor = () => {
 
         {/* Conteúdo */}
         <div className="flex-1 min-h-0 flex items-center justify-center p-4 md:p-6 bg-orange-100 relative">
-          <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8">
+          <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 
+     md:mr-[100px] lg:mr-[110px]">
+
 
             {/* Formulário */}
             <div className="w-full md:w-[520px] bg-white rounded-2xl p-8 shadow-lg flex flex-col">
