@@ -131,7 +131,7 @@ const EnviarCSV = () => {
 
                                     <button
                                         type="button"
-                                        onClick={() => navigate("/CadastroDeProdutos")}
+                                        onClick={() => navigate("/produtos")}
                                         className="py-2 px-4 rounded-lg shadow-md text-sm font-medium 
                                text-gray-700 bg-gray-200 hover:bg-gray-300 transition"
                                     >

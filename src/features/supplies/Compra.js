@@ -56,6 +56,12 @@ const CadastroCompra = () => {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
+  // 🔥 CORREÇÃO DO FUSO HORÁRIO
+  const ajustarDataParaTimezone = (dataStr) => {
+    if (!dataStr) return null;
+    return `${dataStr}T03:00:00`; // evita salvar 1 dia antes
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -73,7 +79,7 @@ const CadastroCompra = () => {
     }
 
     const entradaDTO = {
-      dataEntrada: formState.dataEntrada,
+      dataEntrada: ajustarDataParaTimezone(formState.dataEntrada),
       observacao: formState.observacao || "Compra registrada via sistema",
       fornecedorId: Number(formState.fornecedorId),
       produtos: formState.produtos.map((p) => ({

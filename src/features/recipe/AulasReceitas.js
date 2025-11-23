@@ -128,7 +128,7 @@ const AulasReceitas = () => {
       await AulaService.RegisterAula({
         nome: formState.nome,
         descricao: formState.descricao,
-        data: formState.data,
+        data: formState.data ? `${formState.data}T12:00:00` : null,
         instrutor: formState.instrutor,
         materia: formState.materia,
         semestre: formState.semestre,
