@@ -164,8 +164,8 @@ const CadastroDeReceita = () => {
           className="h-28 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 
                         flex flex-col items-center justify-center text-white rounded-b-3xl shadow-lg"
         >
-          <h2 className="text-2xl font-extrabold tracking-tight">Cadastro de Receitas</h2>
-          <p className="text-sm opacity-90">GastroFlow</p>
+          <h2 className="text-base md:text-2xl font-extrabold tracking-tight">Cadastro de Receitas</h2>
+          <p className="hidden md:block text-sm opacity-90">GastroFlow</p>
         </div>
 
         <div className="flex-1 flex items-start justify-center md:p-6 overflow-y-auto">

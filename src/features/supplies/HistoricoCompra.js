@@ -117,19 +117,21 @@ const HistoricoCompras = () => {
 
       <div className="flex-1 flex flex-col min-w-0">
 
-        {/* HEADER IGUAL AO DO MOSTRAR FORNECEDORES */}
-        <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 flex flex-col items-center justify-center text-white rounded-b-3xl">
-          <h2 className="text-2xl font-bold">Histórico de Compras</h2>
+        {/* HEADER */}
+        <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 flex items-center justify-center text-white rounded-b-3xl">
+          <h2 className="text-base md:text-2xl font-bold">Histórico de Compras</h2>
         </div>
 
         {/* CONTEÚDO CENTRAL */}
         <div className="flex-1 flex p-6 bg-orange-100 items-center justify-center overflow-auto">
-          <div className="w-full max-w-3xl bg-white rounded-lg shadow-md p-6 flex flex-col space-y-4">
+
+          {/* DESKTOP */}
+          <div className="hidden md:flex w-full max-w-3xl bg-white rounded-lg shadow-md p-6 flex-col space-y-4">
 
             <h3 className="text-xl font-semibold text-gray-800">Compras Registradas</h3>
 
-            {/* FILTROS DE DATA */}
-            <div className="flex flex-col md:flex-row md:space-x-6 space-y-3 md:space-y-0">
+            {/* FILTROS */}
+            <div className="flex space-x-6">
 
               <div className="flex flex-col">
                 <span className="text-sm font-medium text-gray-700">De:</span>
@@ -137,7 +139,7 @@ const HistoricoCompras = () => {
                   type="date"
                   value={dataInicio}
                   onChange={(e) => setDataInicio(e.target.value)}
-                  className="block rounded-md border border-gray-300 p-2 text-sm"
+                  className="rounded-md border p-2"
                 />
               </div>
 
@@ -147,19 +149,19 @@ const HistoricoCompras = () => {
                   type="date"
                   value={dataFim}
                   onChange={(e) => setDataFim(e.target.value)}
-                  className="block rounded-md border border-gray-300 p-2 text-sm"
+                  className="rounded-md border p-2"
                 />
               </div>
 
             </div>
 
-            {/* TABELA */}
-            <div className="overflow-y-auto overflow-x-auto border border-gray-200 rounded-md max-h-[400px]">
+            {/* TABELA DESKTOP */}
+            <div className="overflow-y-auto overflow-x-auto border rounded-md max-h-[400px]">
 
               {loading ? (
-                <div className="p-4 text-center text-gray-500">Carregando histórico...</div>
+                <div className="p-4 text-center text-gray-500">Carregando...</div>
               ) : filtradas.length > 0 ? (
-                <table className="w-full text-sm border">
+                <table className="w-full text-sm">
                   <thead className="bg-gray-100">
                     <tr>
                       <th className="px-4 py-2 text-left">Data</th>
@@ -172,8 +174,8 @@ const HistoricoCompras = () => {
                     {filtradas.map((entrada) => (
                       <tr
                         key={entrada.id}
-                        className="hover:bg-[#fff5e6] cursor-pointer transition"
                         onClick={() => abrirModal(entrada)}
+                        className="hover:bg-[#fff5e6] cursor-pointer"
                       >
                         <td className="px-4 py-2">{formatFromISO(entrada.dataEntrada)}</td>
                         <td className="px-4 py-2">
@@ -189,6 +191,57 @@ const HistoricoCompras = () => {
                 <div className="p-4 text-center text-gray-500">Nenhuma compra encontrada.</div>
               )}
             </div>
+          </div>
+
+          {/* MOBILE — CARDS */}
+          <div className="md:hidden w-full flex flex-col h-full p-2">
+
+            {/* FILTROS */}
+            <div className="flex flex-col mb-4 gap-3">
+              
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-gray-700">De:</span>
+                <input
+                  type="date"
+                  value={dataInicio}
+                  onChange={(e) => setDataInicio(e.target.value)}
+                  className="rounded-md border p-2 bg-white"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-gray-700">Até:</span>
+                <input
+                  type="date"
+                  value={dataFim}
+                  onChange={(e) => setDataFim(e.target.value)}
+                  className="rounded-md border p-2 bg-white"
+                />
+              </div>
+
+            </div>
+
+            {/* LISTA MOBILE */}
+            <div className="flex-1 overflow-y-auto flex flex-col gap-3">
+              {loading ? (
+                <div className="text-center text-gray-500">Carregando…</div>
+              ) : filtradas.length > 0 ? (
+                filtradas.map((entrada) => (
+                  <div
+                    key={entrada.id}
+                    onClick={() => abrirModal(entrada)}
+                    className="bg-white p-4 rounded-lg shadow-sm border cursor-pointer hover:bg-orange-50"
+                  >
+                    <p><strong>Data:</strong> {formatFromISO(entrada.dataEntrada)}</p>
+                    <p><strong>Fornecedor:</strong> {fornecedoresMap[entrada.fornecedorId] ?? `Fornecedor #${entrada.fornecedorId}`}</p>
+                    <p><strong>Observação:</strong> {entrada.observacao || "—"}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center text-gray-500">Nenhuma compra encontrada.</div>
+              )}
+            </div>
+
           </div>
         </div>
       </div>

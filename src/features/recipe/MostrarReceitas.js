@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaSearch, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import LogoGastroFlow from "../../assets/LogoGastroFlow.png";
 import ReceitaService from "./service/ReceitaService";
 import ListarReceitasModal from "./modais/ListarReceitasModal";
@@ -11,11 +10,9 @@ const MostrarReceitas = () => {
   const [filtroNome, setFiltroNome] = useState("");
   const [loadingReceitas, setLoadingReceitas] = useState(true);
 
-  // Paginação
   const [paginaAtual, setPaginaAtual] = useState(1);
   const receitasPorPagina = 10;
 
-  // Modal
   const [receitaSelecionada, setReceitaSelecionada] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,7 +26,6 @@ const MostrarReceitas = () => {
     setIsModalOpen(false);
   };
 
-  // Buscar receitas
   const fetchReceitas = async () => {
     setLoadingReceitas(true);
     try {
@@ -47,49 +43,44 @@ const MostrarReceitas = () => {
     fetchReceitas();
   }, []);
 
-  // Filtro de nome
   useEffect(() => {
-    const lista = receitas.filter((r) => {
-      if (!filtroNome.trim()) return true;
-      return r.nome?.toLowerCase().includes(filtroNome.toLowerCase());
-    });
+    const termo = filtroNome.trim().toLowerCase();
+    const filtradas = receitas.filter((r) =>
+      !termo ? true : r.nome?.toLowerCase().includes(termo)
+    );
 
-    setReceitasFiltradas(lista);
+    setReceitasFiltradas(filtradas);
     setPaginaAtual(1);
   }, [filtroNome, receitas]);
 
-  // Paginação
   const indiceUltima = paginaAtual * receitasPorPagina;
   const indicePrimeira = indiceUltima - receitasPorPagina;
   const receitasDaPagina = receitasFiltradas.slice(indicePrimeira, indiceUltima);
+
   const totalPaginas = Math.ceil(receitasFiltradas.length / receitasPorPagina);
 
-  const paginaAnterior = () =>
-    setPaginaAtual((prev) => Math.max(prev - 1, 1));
-
-  const proximaPagina = () =>
-    setPaginaAtual((prev) => Math.min(prev + 1, totalPaginas));
-
-  
+  const paginaAnterior = () => setPaginaAtual((p) => Math.max(1, p - 1));
+  const proximaPagina = () => setPaginaAtual((p) => Math.min(totalPaginas, p + 1));
 
   return (
     <div className="flex w-screen h-screen overflow-hidden bg-orange-100 text-gray-800 font-sans">
 
-      {/* Conteúdo */}
+      {/* Conteúdo principal */}
       <div className="flex-1 flex flex-col min-w-0">
 
         {/* Header */}
         <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 flex flex-col items-center justify-center text-white rounded-b-3xl overflow-hidden">
-          <h2 className="text-2xl font-bold">Receitas Cadastradas</h2>
+          <h2 className="text-base md:text-2xl font-bold">Receitas Cadastradas</h2>
         </div>
 
-        {/* Caixa principal */}
-        <div className="flex-1 flex p-6 bg-orange-100 items-center justify-center overflow-auto">
-          <div className="w-full max-w-3xl bg-white rounded-lg shadow-md p-6 flex flex-col space-y-4">
+        {/* Container principal */}
+        <div className="flex-1 flex p-6 items-center justify-center overflow-auto">
 
+          {/* DESKTOP — mantém EXATAMENTE como estava */}
+          <div className="hidden md:flex w-full max-w-3xl bg-white rounded-lg shadow-md p-6 flex-col space-y-4">
             <h3 className="text-xl font-semibold text-gray-800">Minhas Receitas</h3>
 
-            {/* FILTRO */}
+            {/* Filtro */}
             <div className="flex space-x-3 items-center">
               <div className="relative flex-1">
                 <input
@@ -103,10 +94,12 @@ const MostrarReceitas = () => {
               </div>
             </div>
 
-            {/* TABELA */}
+            {/* Tabela Desktop */}
             <div className="overflow-x-auto border border-gray-200 rounded-md flex-1">
               {loadingReceitas ? (
-                <div className="p-4 text-center text-gray-500">Carregando receitas...</div>
+                <div className="p-4 text-center text-gray-500 animate-pulse">
+                  Carregando receitas...
+                </div>
               ) : receitasFiltradas.length > 0 ? (
                 <>
                   <table className="w-full text-sm border">
@@ -118,7 +111,6 @@ const MostrarReceitas = () => {
                         <th className="px-4 py-2 text-left">Professor</th>
                       </tr>
                     </thead>
-
                     <tbody>
                       {receitasDaPagina.map((receita) => (
                         <tr
@@ -135,7 +127,7 @@ const MostrarReceitas = () => {
                     </tbody>
                   </table>
 
-                  {/* PAGINAÇÃO */}
+                  {/* Paginação Desktop */}
                   <div className="flex justify-between items-center p-4 border-t border-gray-200">
                     <button
                       onClick={paginaAnterior}
@@ -169,9 +161,75 @@ const MostrarReceitas = () => {
               )}
             </div>
           </div>
+
+          {/* MOBILE — FULL SCREEN */}
+          <div className="md:hidden w-full h-full flex flex-col p-2">
+
+            {/* Filtro */}
+            <div className="relative mb-4">
+              <input
+                type="text"
+                placeholder="Filtrar por nome..."
+                value={filtroNome}
+                onChange={(e) => setFiltroNome(e.target.value)}
+                className="block w-full rounded-md border border-gray-300 focus:border-orange-500 p-2 pl-10 text-sm bg-white"
+              />
+              <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div>
+
+            {/* Lista em Cards - Mobile */}
+            <div className="flex-1 overflow-y-auto flex flex-col gap-3">
+              {loadingReceitas ? (
+                <div className="text-center text-gray-500 animate-pulse">
+                  Carregando receitas...
+                </div>
+              ) : receitasDaPagina.length > 0 ? (
+                receitasDaPagina.map((receita) => (
+                  <div
+                    key={receita.id}
+                    onClick={() => abrirModal(receita)}
+                    className="border rounded-lg p-4 shadow-sm bg-white cursor-pointer hover:bg-orange-100 transition"
+                  >
+                    <p><strong>Nome:</strong> {receita.nome}</p>
+                    <p><strong>Tipo:</strong> {receita.tipo ?? "-"}</p>
+                    <p><strong>Rendimento:</strong> {receita.rendimento ?? "-"}</p>
+                    <p><strong>Professor:</strong> {receita.professorReceita ?? "-"}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center text-gray-500">
+                  Nenhuma receita encontrada.
+                </div>
+              )}
+            </div>
+
+            {/* Paginação Mobile */}
+            <div className="flex justify-between items-center py-4">
+              <button
+                onClick={paginaAnterior}
+                disabled={paginaAtual === 1}
+                className="px-3 py-1 text-sm text-orange-600 font-medium rounded-md bg-white disabled:text-gray-400"
+              >
+                <FaChevronLeft />
+              </button>
+
+              <span className="text-sm">
+                Página {paginaAtual} de {totalPaginas}
+              </span>
+
+              <button
+                onClick={proximaPagina}
+                disabled={paginaAtual === totalPaginas}
+                className="px-3 py-1 text-sm text-orange-600 font-medium rounded-md bg-white disabled:text-gray-400"
+              >
+                <FaChevronRight />
+              </button>
+            </div>
+
+          </div>
         </div>
 
-        {/* Logo */}
+        {/* Logo Desktop */}
         <div className="hidden md:flex items-center justify-center rounded-2xl p-6">
           <img
             src={LogoGastroFlow}
@@ -181,14 +239,13 @@ const MostrarReceitas = () => {
         </div>
       </div>
 
-      {/* MODAL SEM CONDICIONAL */}
+      {/* Modal */}
       <ListarReceitasModal
         isOpen={isModalOpen}
         onClose={fecharModal}
         receitaSelecionada={receitaSelecionada}
         onUpdated={fetchReceitas}
       />
-
     </div>
   );
 };

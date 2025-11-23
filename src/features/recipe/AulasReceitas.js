@@ -168,11 +168,12 @@ const AulasReceitas = () => {
     <div className="flex w-screen h-screen overflow-hidden bg-gray-50 text-gray-800 font-sans">
       <div className="flex-1 flex flex-col bg-orange-100">
 
+
         {/* Topbar */}
-        <div className="h-28 shrink-0 bg-gradient-to-r from-orange-500 via-yellow-400 to-orange-600
-                        flex flex-col items-center justify-center text-white rounded-b-3xl shadow-xl px-4">
-          <h2 className="text-2xl font-extrabold tracking-tight">Cadastro de Aulas e Receitas</h2>
-          <p className="text-sm mt-1 opacity-90">Organize o currículo da sua escola com GastroFlow.</p>
+        <div className="h-28 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 
+                        flex flex-col items-center justify-center text-white rounded-b-3xl shadow-lg">
+          <h2 className="text-base md:text-2xl font-extrabold tracking-tight">Cadastro de Aulas</h2>
+          <p className="hidden md:block text-sm mt-1 opacity-90">Organize o currículo da sua escola com GastroFlow.</p>
         </div>
 
         {/* Form */}

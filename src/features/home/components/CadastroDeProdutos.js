@@ -72,7 +72,7 @@ const CadastroDeProdutos = () => {
         {/* Topbar */}
         <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 
                         flex flex-col items-center justify-center text-white rounded-b-3xl overflow-hidden">
-          <h2 className="text-2xl font-bold">Cadastrar Produtos</h2>
+          <h2 className="text-base md:text-2xl font-bold">Cadastrar Produtos</h2>
         </div>
 
         {/* Conteúdo */}

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import LogoGastroFlow from "../../assets/LogoGastroFlow.png";
-import FornecedorService from "./Service/FornecedorService"
-
+import FornecedorService from "./Service/FornecedorService";
 import { useStatusModalStore } from "../../shared/store/modal-store";
 
 const Fornecedor = () => {
@@ -66,20 +65,23 @@ const Fornecedor = () => {
   };
 
   return (
-    <div className="flex w-screen h-screen overflow-hidden bg-[#ffffff] text-gray-800 font-sans">
+    <div className="flex w-full min-h-screen bg-[#ffffff] text-gray-800 font-sans overflow-x-hidden">
 
-      {/* LADO DIREITO */}
-      <div className="flex-1 min-w-0 flex flex-col overflow-hidden bg-orange-100">
-        {/* Topbar */}
-        <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 flex flex-col items-center justify-center text-white rounded-b-3xl">
-          <h2 className="text-2xl font-bold">Cadastrar Fornecedor</h2>
+      {/* Área direita */}
+      <div className="flex-1 flex flex-col bg-orange-100">
+
+        {/* Topbar FIXA SOMENTE NO MOBILE */}
+        <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 
+                        flex flex-col items-center justify-center text-white rounded-b-3xl
+                        md:relative fixed top-0 left-0 w-full z-3 shadow-md">
+          <h2 className="text-base md:text-2xl font-bold">Cadastrar Fornecedor</h2>
         </div>
 
         {/* Conteúdo */}
-        <div className="flex-1 min-h-0 flex items-center justify-center p-4 md:p-6 bg-orange-100 relative">
-          <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 
-     md:mr-[100px] lg:mr-[110px]">
+        <div className="pt-32 md:pt-0 flex-1 flex items-center justify-center p-4 md:p-6 overflow-hidden">
 
+          <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 
+                          md:mr-[100px] lg:mr-[110px]">
 
             {/* Formulário */}
             <div className="w-full md:w-[520px] bg-white rounded-2xl p-8 shadow-lg flex flex-col">
@@ -99,7 +101,8 @@ const Fornecedor = () => {
                     value={formState.razaoSocial}
                     onChange={handleChange}
                     placeholder="Ex: Itaú Unibanco Banco Múltiplo S.A."
-                    className="block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-400 p-2 text-sm"
+                    className="block w-full rounded-lg border border-gray-300 shadow-sm 
+                               focus:ring-2 focus:ring-orange-400 p-2 text-sm"
                   />
                 </div>
 
@@ -113,7 +116,8 @@ const Fornecedor = () => {
                     value={formState.nomeFantasia}
                     onChange={handleChange}
                     placeholder="Ex: Itaú"
-                    className="block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-400 p-2 text-sm"
+                    className="block w-full rounded-lg border border-gray-300 shadow-sm 
+                               focus:ring-2 focus:ring-orange-400 p-2 text-sm"
                   />
                 </div>
 
@@ -128,7 +132,8 @@ const Fornecedor = () => {
                     value={formState.telefone}
                     onChange={handleChange}
                     placeholder="(11) 98765-4321"
-                    className="block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-400 p-2 text-sm"
+                    className="block w-full rounded-lg border border-gray-300 shadow-sm 
+                               focus:ring-2 focus:ring-orange-400 p-2 text-sm"
                   />
                 </div>
 
@@ -142,7 +147,8 @@ const Fornecedor = () => {
                     value={formState.endereco}
                     onChange={handleChange}
                     placeholder="Rua das Flores, 123"
-                    className="block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-400 p-2 text-sm"
+                    className="block w-full rounded-lg border border-gray-300 shadow-sm 
+                               focus:ring-2 focus:ring-orange-400 p-2 text-sm"
                   />
                 </div>
 
@@ -156,32 +162,52 @@ const Fornecedor = () => {
                     value={formState.email}
                     onChange={handleChange}
                     placeholder="fornecedor@gmail.com"
-                    className="block w-full rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-orange-400 p-2 text-sm"
+                    className="block w-full rounded-lg border border-gray-300 shadow-sm 
+                               focus:ring-2 focus:ring-orange-400 p-2 text-sm"
                   />
                 </div>
 
                 <div className="flex flex-col space-y-3 pt-2">
                   <button
                     type="submit"
-                    className="py-2 px-4 rounded-lg shadow-md text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:ring-orange-400 transition"
+                    className="py-2 px-4 rounded-lg shadow-md text-sm font-medium 
+                               text-white bg-orange-500 hover:bg-orange-600 focus:ring-2 focus:ring-orange-400 transition"
                   >
                     Cadastrar Fornecedor
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormState({
+                        razaoSocial: "",
+                        nomeFantasia: "",
+                        telefone: "",
+                        endereco: "",
+                        email: "",
+                      })
+                    }
+                    className="py-2 px-4 rounded-lg shadow-md text-sm font-medium 
+                               text-gray-700 bg-gray-200 hover:bg-gray-300 transition"
+                  >
+                    Cancelar
                   </button>
                 </div>
 
               </form>
             </div>
 
-            {/* Logo */}
+            {/* Logo (só no desktop) */}
             <div className="hidden md:flex flex-1 items-center justify-center rounded-2xl p-6">
               <img
                 src={LogoGastroFlow}
                 alt="Logo"
-                className="flex-1 w-full h-[21rem] object-contain"
+                className="w-full max-w-sm h-[21rem] object-contain"
               />
             </div>
 
           </div>
+
         </div>
       </div>
     </div>
