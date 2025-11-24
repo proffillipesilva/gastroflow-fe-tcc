@@ -73,11 +73,6 @@ export default function Header() {
                 <p className="text-base font-semibold">{user?.nome}</p>
                 <p className="text-sm text-gray-600">{user?.email}</p>
               </div>
-
-              <button className="flex items-center gap-2 px-4 py-3 w-full hover:bg-gray-100">
-                <FiUser /> Perfil
-              </button>
-
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-4 py-3 w-full hover:bg-gray-100 text-red-600"
