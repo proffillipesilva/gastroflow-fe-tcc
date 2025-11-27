@@ -65,22 +65,21 @@ const CadastroDeProdutos = () => {
   };
 
   return (
-    <div className="flex w-screen h-screen overflow-hidden bg-[#ffffff] text-gray-800 font-sans">
+    <div className="flex w-full min-h-screen bg-[#ffffff] text-gray-800 font-sans overflow-x-hidden">
 
-
-
-      <div className="flex-1 min-w-0 flex flex-col overflow-hidden bg-orange-100 ml-64">
+      <div className="flex-1 flex flex-col bg-orange-100">
 
         {/* Topbar */}
         <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 
                         flex flex-col items-center justify-center text-white rounded-b-3xl overflow-hidden">
-          <h2 className="text-2xl font-bold">Cadastrar Produtos</h2>
+          <h2 className="text-base md:text-2xl font-bold">Cadastrar Produtos</h2>
         </div>
 
         {/* Conteúdo */}
-        <div className="flex-1 min-h-0 flex items-center justify-center p-4 md:p-6 relative">
+        <div className="flex-1 flex items-center justify-center p-4 md:p-6 overflow-hidden">
 
-          <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8">
+          <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8 
+                md:mr-[100px] lg:mr-[110px]">
 
             {/* Formulário */}
             <div className="w-full md:w-[520px] bg-white rounded-2xl p-8 shadow-lg flex flex-col">
@@ -194,7 +193,7 @@ const CadastroDeProdutos = () => {
               <img
                 src={LogoGastroFlow}
                 alt="Logo"
-                className="flex-1 w-full h-[21rem] object-contain"
+                className="w-full max-w-sm h-[21rem] object-contain"
               />
             </div>
 

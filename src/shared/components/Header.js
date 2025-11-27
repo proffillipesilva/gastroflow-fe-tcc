@@ -29,13 +29,20 @@ export default function Header() {
 
   return (
     <>
-      <div className="fixed top-7 right-10 z-50">
-        {/* Agrupa o botão e o menu */}
+      <div className="fixed top-7 right-5 z-50">
         <div className="relative" ref={menuRef}>
+          
+          {/* BOTÃO */}
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-3 bg-white/20 hover:bg-white/30 px-3 py-2 rounded-full transition backdrop-blur-sm"
+            className="
+              flex items-center gap-3
+              bg-white/20 hover:bg-white/30 px-3 py-2 rounded-full backdrop-blur-sm transition
+              sm:flex
+              max-sm:bg-transparent max-sm:px-0 max-sm:py-0
+            "
           >
+            {/* FOTO — maior no mobile */}
             <img
               src={
                 user?.picture ||
@@ -43,27 +50,29 @@ export default function Header() {
                   encodeURIComponent(user?.nome || "User")
               }
               alt="perfil"
-              className="w-10 h-10 rounded-full object-cover bg-white"
+              className="
+                w-10 h-10
+                max-sm:w-14 max-sm:h-14
+                rounded-full object-cover bg-white
+              "
             />
 
+            {/* NOME — some no mobile */}
             <span className="hidden sm:inline font-semibold text-white text-2xl">
               {user ? user.nome : "Carregando..."}
             </span>
 
-            <FiChevronDown className="text-white w-6 h-6 mt-1" />
+            {/* SETA — some no mobile */}
+            <FiChevronDown className="text-white w-6 h-6 mt-1 hidden sm:block" />
           </button>
 
+          {/* MENU */}
           {open && (
             <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg overflow-hidden">
               <div className="px-4 py-3 border-b">
                 <p className="text-base font-semibold">{user?.nome}</p>
                 <p className="text-sm text-gray-600">{user?.email}</p>
               </div>
-
-              <button className="flex items-center gap-2 px-4 py-3 w-full hover:bg-gray-100">
-                <FiUser /> Perfil
-              </button>
-
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-4 py-3 w-full hover:bg-gray-100 text-red-600"

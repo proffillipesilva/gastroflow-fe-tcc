@@ -83,8 +83,9 @@ export default function CadastroUsuario() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen 
-                    bg-gradient-to-br from-orange-500/80 via-yellow-500/70 to-orange-600/80">
+        <div className="flex justify-center items-center min-h-screen overflow-x-hidden overflow-y-auto
+                bg-gradient-to-br from-orange-500/80 via-yellow-500/70 to-orange-600/80">
+
 
             <div className="w-full max-w-md p-8 rounded-2xl bg-white shadow-2xl">
                 
