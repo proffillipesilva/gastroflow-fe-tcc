@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import LogoGastroFlow from "../../assets/LogoGastroFlow.png";
 import ProdutoService from "../home/service/ProdutoService";
-
 import { useStatusModalStore } from "../../shared/store/modal-store";
 import { useNavigate } from "react-router-dom";
 
@@ -39,35 +38,33 @@ const EnviarCSV = () => {
         }
     };
 
-
     return (
         <div className="flex w-screen h-screen overflow-hidden bg-white text-gray-800 font-sans">
 
             {/* Conteúdo principal */}
-            <div className="flex-1 min-w-0 flex flex-col overflow-hidden bg-orange-100 ml-64">
+            <div className="flex-1 min-w-0 flex flex-col overflow-hidden bg-orange-100 md:ml-64">
 
                 {/* Topbar */}
                 <div className="h-28 shrink-0 bg-gradient-to-r from-orange-400 via-yellow-500 to-orange-600 
-                        flex flex-col items-center justify-center text-white rounded-b-3xl shadow-md">
-                    <h2 className="text-2xl font-bold">Enviar arquivo CSV</h2>
+                    flex flex-col items-center justify-center text-white rounded-b-3xl shadow-md">
+                    <h2 className="text-2xl font-bold text-center px-4">Enviar arquivo CSV</h2>
                 </div>
 
                 {/* Conteúdo */}
-                <div className="flex-1 flex items-center justify-center p-4 md:p-6">
+                <div className="flex-1 flex items-center justify-center p-4 md:p-6 overflow-y-auto">
 
                     <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-8">
 
                         {/* Card */}
-                        <div className="w-full md:w-[520px] bg-white rounded-2xl p-8 shadow-lg flex flex-col">
+                        <div className="w-full md:w-[520px] bg-white rounded-2xl p-6 md:p-8 shadow-lg flex flex-col">
 
-                            <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                            <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center md:text-left">
                                 Upload de Produtos via CSV
                             </h3>
 
                             <form onSubmit={handleSubmit} className="space-y-5 w-full">
 
                                 {/* Input File */}
-                                {/* Selecionar CSV estilizado */}
                                 <div className="flex flex-col gap-2">
 
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -76,20 +73,20 @@ const EnviarCSV = () => {
 
                                     {/* Input invisível */}
                                     <input
-                                        id="inputFile"
+                                        id="input-csv"
                                         type="file"
                                         accept=".csv"
                                         onChange={handleFileChange}
                                         className="hidden"
                                     />
 
-                                    {/* Botão bonito */}
+                                    {/* Botão estilizado */}
                                     <button
                                         type="button"
                                         onClick={() => document.getElementById("input-csv").click()}
                                         className="w-full py-3 px-4 rounded-lg border border-orange-400 bg-orange-50 
-                                                    text-orange-700 font-medium shadow-sm hover:bg-orange-100 
-                                                    hover:border-orange-500 transition flex items-center justify-center gap-2"
+                                            text-orange-700 font-medium shadow-sm hover:bg-orange-100 
+                                            hover:border-orange-500 transition flex items-center justify-center gap-2"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -109,22 +106,20 @@ const EnviarCSV = () => {
                                         Selecionar arquivo CSV
                                     </button>
 
-                                    {/* Exibe nome do arquivo */}
                                     {file && (
-                                        <p className="text-xs text-gray-600">
+                                        <p className="text-xs text-gray-600 mt-1 truncate">
                                             Arquivo selecionado: <span className="font-medium">{file.name}</span>
                                         </p>
                                     )}
                                 </div>
 
-
                                 {/* Botões */}
                                 <div className="flex flex-col space-y-3 pt-2">
                                     <button
                                         type="submit"
-                                        className="py-2 px-4 rounded-lg shadow-md text-sm font-medium 
-                               text-white bg-orange-500 hover:bg-orange-600 
-                               focus:ring-2 focus:ring-orange-400 transition"
+                                        className="py-3 px-4 rounded-lg shadow-md text-sm font-medium 
+                                            text-white bg-orange-500 hover:bg-orange-600 
+                                            focus:ring-2 focus:ring-orange-400 transition"
                                     >
                                         Enviar CSV
                                     </button>
@@ -132,8 +127,8 @@ const EnviarCSV = () => {
                                     <button
                                         type="button"
                                         onClick={() => navigate("/produtos")}
-                                        className="py-2 px-4 rounded-lg shadow-md text-sm font-medium 
-                               text-gray-700 bg-gray-200 hover:bg-gray-300 transition"
+                                        className="py-3 px-4 rounded-lg shadow-md text-sm font-medium 
+                                            text-gray-700 bg-gray-200 hover:bg-gray-300 transition"
                                     >
                                         Voltar
                                     </button>
@@ -143,11 +138,20 @@ const EnviarCSV = () => {
                         </div>
 
                         {/* Logo */}
-                        <div className="hidden md:flex flex-1 items-center justify-center rounded-2xl p-6">
+                        <div className="flex flex-1 items-center justify-center p-4 md:p-6 md:flex hidden md:block">
                             <img
                                 src={LogoGastroFlow}
                                 alt="Logo"
-                                className="flex-1 w-full h-[21rem] object-contain"
+                                className="w-full max-w-sm object-contain mx-auto"
+                            />
+                        </div>
+
+                        {/* Logo no mobile */}
+                        <div className="md:hidden flex justify-center mt-4">
+                            <img
+                                src={LogoGastroFlow}
+                                alt="Logo"
+                                className="w-48 object-contain opacity-80"
                             />
                         </div>
                     </div>
