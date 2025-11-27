@@ -9,6 +9,7 @@ const api = axios.create({
 const PUBLIC_PATHS = [
   "/v1/api/auth/register",
   "/v1/api/auth/login",
+  "/v1/api/users/admin",
 ];
 
 // REQUEST

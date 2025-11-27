@@ -84,15 +84,15 @@ async function UpdateProduct({ id, nome, unidadeMedida, categoria, quantidadeEst
 }
 
 //CSV 
-async function UploadCSV({formData}) {
-    try {
-        const response = await api.post("/v1/api/produtos/csv", {
-            formData
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
+async function UploadCSV(formData) {
+    const token = localStorage.getItem("token");
+
+    return api.post("/v1/api/produtos/csv", formData, {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "multipart/form-data"
+        }
+    });
 }
 
 export default {

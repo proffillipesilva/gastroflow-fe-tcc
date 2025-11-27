@@ -27,18 +27,18 @@ const EnviarCSV = () => {
             showLoading("Enviando arquivo CSV...");
 
             const formData = new FormData();
-            formData.append("file", file);
+            formData.append("inputFile", file);
 
             await ProdutoService.UploadCSV(formData);
 
             showSuccess("Arquivo CSV enviado com sucesso!");
             setFile(null);
-
         } catch (err) {
             console.error(err);
             showError("Erro ao enviar o arquivo CSV!");
         }
     };
+
 
     return (
         <div className="flex w-screen h-screen overflow-hidden bg-white text-gray-800 font-sans">
@@ -76,7 +76,7 @@ const EnviarCSV = () => {
 
                                     {/* Input invisível */}
                                     <input
-                                        id="input-csv"
+                                        id="inputFile"
                                         type="file"
                                         accept=".csv"
                                         onChange={handleFileChange}
