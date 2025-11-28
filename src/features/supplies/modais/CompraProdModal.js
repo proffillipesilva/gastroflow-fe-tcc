@@ -54,8 +54,6 @@ const CompraProdModal = ({ isOpen, onClose, onAddIngredients }) => {
     }
 
     onAddIngredients(selecionados);
-    setQuantidades({});
-    setValores({});
     onClose();
   };
 

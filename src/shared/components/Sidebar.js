@@ -72,12 +72,7 @@ const Sidebar = ({ isOpen }) => {
         </div>
 
         {/* Conteúdo */}
-        <div className="flex-1 overflow-y-auto space-y-3">
-          <SidebarSection
-            icon={FaUser}
-            title="Usuários"
-            links={[{ label: "Cadastro de Usuários", path: "/CadastroUsuario" }]}
-          />
+        <div className="flex-1 overflow-hidden space-y-3">
 
           <SidebarSection
             icon={FaBox}
