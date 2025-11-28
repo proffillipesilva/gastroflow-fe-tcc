@@ -8,6 +8,8 @@ const MostrarReceitas = () => {
   const [receitas, setReceitas] = useState([]);
   const [receitasFiltradas, setReceitasFiltradas] = useState([]);
   const [filtroNome, setFiltroNome] = useState("");
+  const [filtroAtivo, setFiltroAtivo] = useState("");
+
   const [loadingReceitas, setLoadingReceitas] = useState(true);
 
   const [paginaAtual, setPaginaAtual] = useState(1);
@@ -44,14 +46,15 @@ const MostrarReceitas = () => {
   }, []);
 
   useEffect(() => {
-    const termo = filtroNome.trim().toLowerCase();
+    const termo = filtroAtivo.toLowerCase();
+
     const filtradas = receitas.filter((r) =>
       !termo ? true : r.nome?.toLowerCase().includes(termo)
     );
 
     setReceitasFiltradas(filtradas);
     setPaginaAtual(1);
-  }, [filtroNome, receitas]);
+  }, [filtroAtivo, receitas]);
 
   const indiceUltima = paginaAtual * receitasPorPagina;
   const indicePrimeira = indiceUltima - receitasPorPagina;
@@ -87,7 +90,22 @@ const MostrarReceitas = () => {
                   type="text"
                   placeholder="Filtrar por nome da receita..."
                   value={filtroNome}
-                  onChange={(e) => setFiltroNome(e.target.value)}
+                  onChange={(e) => {
+                    const valor = e.target.value;
+                    setFiltroNome(valor);
+
+                    // Se apagou tudo → resetar filtro
+                    if (valor.trim() === "") {
+                      setFiltroAtivo("");
+                      setPaginaAtual(1);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      setFiltroAtivo(filtroNome.trim());
+                      setPaginaAtual(1);
+                    }
+                  }}
                   className="block w-full rounded-md border border-gray-300 focus:border-orange-500 p-2 pl-10 text-sm"
                 />
                 <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -171,7 +189,21 @@ const MostrarReceitas = () => {
                 type="text"
                 placeholder="Filtrar por nome..."
                 value={filtroNome}
-                onChange={(e) => setFiltroNome(e.target.value)}
+                onChange={(e) => {
+                  const valor = e.target.value;
+                  setFiltroNome(valor);
+
+                  if (valor.trim() === "") {
+                    setFiltroAtivo("");
+                    setPaginaAtual(1);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setFiltroAtivo(filtroNome.trim());
+                    setPaginaAtual(1);
+                  }
+                }}
                 className="block w-full rounded-md border border-gray-300 focus:border-orange-500 p-2 pl-10 text-sm bg-white"
               />
               <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />

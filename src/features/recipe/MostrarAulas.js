@@ -6,7 +6,11 @@ import AulaModal from "./modais/Aulamodal";
 const MostrarAulas = () => {
   const [aulas, setAulas] = useState([]);
   const [aulasFiltradas, setAulasFiltradas] = useState([]);
+
+  const [pendingFiltro, setPendingFiltro] = useState(""); // <- texto digitado
   const [filtroNome, setFiltroNome] = useState("");
+  const [filtroAtivo, setFiltroAtivo] = useState("");       // <- só aplica com ENTER
+
   const [loadingAulas, setLoadingAulas] = useState(true);
 
   // PAGINAÇÃO
@@ -45,16 +49,16 @@ const MostrarAulas = () => {
     fetchAulas();
   }, []);
 
-  // FILTRO
+  // FILTRO (só roda quando pressionar ENTER)
   useEffect(() => {
-    const termo = filtroNome.trim().toLowerCase();
+    const termo = filtroAtivo.toLowerCase();
+
     const filtradas = aulas.filter((a) =>
       !termo ? true : a.nome?.toLowerCase().includes(termo)
     );
 
     setAulasFiltradas(filtradas);
-    setPaginaAtual(1);
-  }, [filtroNome, aulas]);
+  }, [filtroAtivo, aulas]);
 
   // PAGINAÇÃO
   const indiceUltima = paginaAtual * aulasPorPagina;
@@ -82,7 +86,7 @@ const MostrarAulas = () => {
         {/* CONTENT */}
         <div className="flex-1 flex p-6 items-center justify-center overflow-auto">
 
-          {/* DESKTOP — tabela original */}
+          {/* DESKTOP */}
           <div className="hidden md:flex w-full max-w-3xl bg-white rounded-lg shadow-md p-6 flex-col space-y-4">
 
             <h3 className="text-xl font-semibold text-gray-800">Minhas Aulas</h3>
@@ -94,7 +98,22 @@ const MostrarAulas = () => {
                   type="text"
                   placeholder="Filtrar por nome da aula..."
                   value={filtroNome}
-                  onChange={(e) => setFiltroNome(e.target.value)}
+                  onChange={(e) => {
+                    const valor = e.target.value;
+                    setFiltroNome(valor);
+
+                    // Se usuário apagar tudo → resetar filtro automaticamente
+                    if (valor.trim() === "") {
+                      setFiltroAtivo("");
+                      setPaginaAtual(1);
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      setFiltroAtivo(filtroNome.trim());
+                      setPaginaAtual(1);
+                    }
+                  }}
                   className="block w-full rounded-md border border-gray-300 focus:border-orange-500 p-2 pl-10 text-sm"
                 />
                 <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -135,7 +154,7 @@ const MostrarAulas = () => {
                     </tbody>
                   </table>
 
-                  {/* PAGINAÇÃO DESKTOP */}
+                  {/* PAGINAÇÃO */}
                   <div className="flex justify-between items-center p-4 border-t border-gray-200">
                     <button
                       onClick={paginaAnterior}

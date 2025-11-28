@@ -13,8 +13,9 @@ const FornecedorModal = ({ isOpen, onClose, onSelect }) => {
   const fetchFornecedores = async () => {
     setLoading(true);
     try {
-      const data = await FornecedorService.GetFornecedores();
-      setFornecedores(data);
+      const data = await FornecedorService.GetFornecedores(0, 999);
+
+      setFornecedores(Array.isArray(data.content) ? data.content : []);
     } catch (err) {
       console.warn("Backend OFF → usando fornecedores mockados.");
       setFornecedores([
