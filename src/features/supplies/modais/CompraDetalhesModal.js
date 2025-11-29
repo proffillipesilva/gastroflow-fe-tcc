@@ -196,7 +196,7 @@ const CompraDetalhesModal = ({ isOpen, onClose, compra, produtosMap, onUpdated }
           </div>
 
           {/* Tabela */}
-          <div className="overflow-x-auto border rounded-lg">
+          <div className="overflow-x-auto border rounded-lg max-h-64 overflow-y-auto">
             <table className="min-w-full text-sm divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>

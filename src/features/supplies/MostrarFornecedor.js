@@ -35,7 +35,7 @@ const MostrarFornecedores = () => {
   const fetchPaginado = async () => {
     setLoading(true);
     try {
-      const data = await FornecedorService.GetFornecedores(
+      const data = await FornecedorService.GetFornecedoresPage(
         pageNumber,
         pageSize,
         "", // sem filtro aqui

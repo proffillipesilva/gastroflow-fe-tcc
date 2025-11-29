@@ -312,7 +312,9 @@ const AulasReceitas = () => {
                         key={`${rec.id}-${index}`}
                         className="flex justify-between items-center bg-white p-2 rounded shadow"
                       >
-                        <span>{rec.nome}</span>
+                        <span>
+                          {rec.nome} | Qtd: {rec.quantidade}
+                        </span>
 
                         <button
                           type="button"
