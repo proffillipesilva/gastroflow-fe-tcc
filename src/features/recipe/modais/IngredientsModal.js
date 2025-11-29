@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProdutoService from "../../home/service/ProdutoService";
 
-const IngredientsModal = ({ isOpen, onClose, onAddIngredients }) => {
+const IngredientsModal = ({ isOpen, onClose, onAddIngredients, ingredientesAtuais }) => {
   const [produtos, setProdutos] = useState([]);
   const [quantidades, setQuantidades] = useState({});
   const [loading, setLoading] = useState(false);
@@ -9,6 +9,12 @@ const IngredientsModal = ({ isOpen, onClose, onAddIngredients }) => {
   // 🔍 Filtros
   const [filtroNome, setFiltroNome] = useState("");
   const [filtroCategoria, setFiltroCategoria] = useState("");
+
+  const [ingredientes, setIngredientes] = useState([]);
+
+  const adicionarIngredientes = (listaFinal) => {
+    setIngredientes(listaFinal);
+  };
 
   // Buscar produtos ao abrir o modal
   useEffect(() => {
@@ -38,7 +44,6 @@ const IngredientsModal = ({ isOpen, onClose, onAddIngredients }) => {
   };
 
   const handleAdd = () => {
-    // Garante que produtos é um array
     const listaProdutos = Array.isArray(produtos) ? produtos : [];
 
     const selecionados = listaProdutos
@@ -58,11 +63,30 @@ const IngredientsModal = ({ isOpen, onClose, onAddIngredients }) => {
       return;
     }
 
-    onAddIngredients(selecionados);
+    // 🔥 Mesclar com ingredientes já existentes (vindo do pai)
+    const ingredientesMesclados = [...ingredientesAtuais];
 
+    selecionados.forEach((novo) => {
+      const existente = ingredientesMesclados.find((i) => i.id === novo.id);
+
+      if (existente) {
+        // Se o ingrediente já existe, apenas somar a quantidade
+        existente.quantidadeAdicionar += novo.quantidadeAdicionar;
+      } else {
+        // Se não existe, adicioná-lo
+        ingredientesMesclados.push(novo);
+      }
+    });
+
+    // Envia a lista final ao componente pai
+    onAddIngredients(ingredientesMesclados);
+
+    // Resetar valores
     setQuantidades({});
     onClose();
   };
+
+
 
 
   if (!isOpen) return null;
@@ -73,13 +97,15 @@ const IngredientsModal = ({ isOpen, onClose, onAddIngredients }) => {
       const nome = p?.nome?.toLowerCase() || "";
       const categoria = p?.categoria?.toLowerCase() || "";
       const filtroNomeLower = filtroNome.toLowerCase().trim();
-      const filtroCategoriaLower = filtroCategoria?.toLowerCase() || "";
+      const filtroCategoriaLower = filtroCategoria.toLowerCase().trim();
 
       const nomeMatch =
         !filtroNomeLower || nome.includes(filtroNomeLower);
 
       const categoriaMatch =
-        !filtroCategoriaLower || categoria === filtroCategoriaLower;
+        !filtroCategoriaLower ||
+        categoria.replace(/\s+/g, "").toLowerCase() ===
+        filtroCategoriaLower.replace(/\s+/g, "").toLowerCase();
 
       return nomeMatch && categoriaMatch;
     })

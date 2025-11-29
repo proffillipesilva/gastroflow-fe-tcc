@@ -33,7 +33,7 @@ async function GetFornecedoresPage(pageNumber = 0, pageSize = 5, nomeFantasia, e
 async function GetFornecedores() {
     try {
         const response = await api.get(
-            `/v1/api/fornecedores/listar`
+            `/v1/api/suppliers/listar`
         );
         
         // Retorna o objeto Page COMPLETO

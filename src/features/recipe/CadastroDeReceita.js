@@ -19,6 +19,8 @@ const CadastroDeReceita = () => {
     professorReceita: "",
   });
 
+  const [ingredientes, setIngredientes] = useState([]);
+
   // usamos errors apenas para controlar as bordas vermelhas
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -126,27 +128,43 @@ const CadastroDeReceita = () => {
   const closeAdjustStockModal = () => setIsModalOpen(false);
 
   const handleAddIngredients = (ingredientesSelecionados) => {
-    const novos = ingredientesSelecionados.map((ing) => ({
-      produtoId: ing.id,
-      quantidade: ing.quantidadeAdicionar,
-      nomeProduto: ing.nomeProduto,
-      categoria: ing.categoria,
-    }));
+    setFormState((prev) => {
+      // copia atual
+      const produtosAtuais = [...prev.produtos];
 
-    setFormState((prev) => ({
-      ...prev,
-      produtos: [...prev.produtos, ...novos],
-    }));
+      ingredientesSelecionados.forEach((ing) => {
+        const existente = produtosAtuais.find((p) => p.produtoId === ing.id);
+
+        if (existente) {
+          // já existe → soma a quantidade
+          existente.quantidade += ing.quantidadeAdicionar;
+        } else {
+          // não existe → adiciona novo
+          produtosAtuais.push({
+            produtoId: ing.id,
+            quantidade: ing.quantidadeAdicionar,
+            nomeProduto: ing.nomeProduto,
+            categoria: ing.categoria,
+          });
+        }
+      });
+
+      return {
+        ...prev,
+        produtos: produtosAtuais,
+      };
+    });
 
     setIsModalOpen(false);
 
-    // ao adicionar ingredientes, removemos erro relacionado (se houver)
+    // remove erro relacionado ao campo produtos
     setErrors((prev) => {
       const copy = { ...prev };
       delete copy.produtos;
       return copy;
     });
   };
+
 
   const handleRemoveIngredient = (indexToRemove) => {
     setFormState((prev) => ({
@@ -323,6 +341,7 @@ const CadastroDeReceita = () => {
         isOpen={isModalOpen}
         onClose={closeAdjustStockModal}
         onAddIngredients={handleAddIngredients}
+        ingredientesAtuais={ingredientes}
       />
     </div>
   );

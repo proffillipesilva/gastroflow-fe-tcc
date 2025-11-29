@@ -13,16 +13,13 @@ const FornecedorModal = ({ isOpen, onClose, onSelect }) => {
   const fetchFornecedores = async () => {
     setLoading(true);
     try {
-      const data = await FornecedorService.GetFornecedores(0, 999);
+      const data = await FornecedorService.GetFornecedores();
 
-      setFornecedores(Array.isArray(data.content) ? data.content : []);
+      // CORREÇÃO: /listar retorna LISTA diretamente
+      setFornecedores(Array.isArray(data) ? data : []);
     } catch (err) {
       console.warn("Backend OFF → usando fornecedores mockados.");
-      setFornecedores([
-        { id: 1, razaoSocial: "Fornecedor Teste LTDA" },
-        { id: 2, razaoSocial: "Distribuidora Brasil" },
-        { id: 3, razaoSocial: "Alimentos Bom Sabor" },
-      ]);
+      setFornecedores([]);
     } finally {
       setLoading(false);
     }
