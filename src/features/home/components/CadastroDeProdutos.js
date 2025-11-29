@@ -4,8 +4,11 @@ import ProdutoService from "../service/ProdutoService";
 
 import { useStatusModalStore } from "../../../shared/store/modal-store";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../../shared/store/auth-store";
 
 const CadastroDeProdutos = () => {
+
+  const { user } = useAuthStore();
 
   const navigate = useNavigate();
 
@@ -170,22 +173,25 @@ const CadastroDeProdutos = () => {
                 </div>
 
               </form>
-              <div className="flex items-center my-4">
-                <div className="flex-1 h-px bg-gray-300"></div>
-                <span className="px-3 text-gray-500 text-sm">ou</span>
-                <div className="flex-1 h-px bg-gray-300"></div>
-              </div>
+              {user?.tipo === "ADMIN" && (
+                <>
+                  <div className="flex items-center my-4">
+                    <div className="flex-1 h-px bg-gray-300"></div>
+                    <span className="px-3 text-gray-500 text-sm">ou</span>
+                    <div className="flex-1 h-px bg-gray-300"></div>
+                  </div>
 
-              {/* Link para página de upload CSV */}
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={() => navigate("/EnviarCSV")}
-                  className="text-orange-600 font-medium hover:underline hover:text-orange-700 transition"
-                >
-                  Enviar arquivo CSV
-                </button>
-              </div>
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={() => navigate("/EnviarCSV")}
+                      className="text-orange-600 font-medium hover:underline hover:text-orange-700 transition"
+                    >
+                      Enviar arquivo CSV
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Logo */}
